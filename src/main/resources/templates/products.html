@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Products</title>
+</head>
+<body>
+<h1>Product List</h1>
+<form action="/" method="get">
+    Search by name: <input type="text" name="name"> <br> <input type="submit" value="Search"/>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.size}"></td>
+        <td th:text="${product.coast}"></td>
+        <td>
+            <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post">
+                <input type="hidden" name="_method" value="post" />
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h3>Create product</h3>
+<form action="/products/create" method="post">
+    Name: <input type="text" name="name"/><br><br>
+    Size: <select th:value="text" name="size">
+    <option value="xs">xs</option>
+    <option value="s">s</option>
+    <option value="m">m</option>
+    <option value="l">l</option>
+    <option value="xl">xl</option>
+</select>
+    Type: <select th:value="text" name="type">
+            <option value="PANTS">pants</option>
+            <option value="SHORTS">shorts</option>
+            <option value="SNEAKERS">sneakers</option>
+            <option value="LONGSLEEVE">longsleeve</option>
+        </select>
+    Coast: <input type="number" name="coast"/><br><br>
+    <input type="submit" value="Add product"/>
+</form>
+</body>
+</html>
