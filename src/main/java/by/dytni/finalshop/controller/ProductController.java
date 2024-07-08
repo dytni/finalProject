@@ -1,16 +1,18 @@
     package by.dytni.finalshop.controller;
 
+
     import by.dytni.finalshop.domain.product.Product;
     import by.dytni.finalshop.service.ProductService;
     import lombok.RequiredArgsConstructor;
     import org.springframework.security.access.prepost.PreAuthorize;
+
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
 
     @Controller
     @RequiredArgsConstructor
- //   @RestController
+//    @RestController
     public class ProductController {
         private final ProductService productService;
 
