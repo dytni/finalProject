@@ -68,12 +68,15 @@
 <body>
 <div class="container">
     <h1 class="mb-4">Product List</h1>
-    <form action="/" method="get" class="form-inline">
+    <form action="/products" method="get" class="form-inline">
         <div class="form-group mr-3">
             <label for="name">Search by name:</label>
             <input type="text" name="name" id="name" class="form-control mx-sm-3">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
+
+        <button type="submit" class="btn btn-primary ml-2">Back</button>
+
     </form>
     <table class="table table-striped">
         <thead class="thead-dark">

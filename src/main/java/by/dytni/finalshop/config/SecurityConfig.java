@@ -25,20 +25,27 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */{
 
     @Bean
     public UserDetailsService userDetailsService(){
-
         return new UserService();
     }
     @Bean
     public PasswordEncoder passwordEncoder (){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/products", "/products", "/user/create", "/user/show").permitAll()
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/", "/products", "/user/create", "/user/show").permitAll()
                         .requestMatchers("/products/**").authenticated())
-                .formLogin(AbstractAuthenticationFilterConfigurer :: permitAll).build();
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .build();
     }
     @Bean
 public AuthenticationProvider authenticationProvider(){
@@ -48,15 +55,18 @@ public AuthenticationProvider authenticationProvider(){
         return provider;
     }
 
-    protected void configure(/*HttpSecurity http*/) throws Exception {
-       /* http
-                .csrf().disable() // Отключите CSRF для тестирования, включите на production
+   /* protected void configure(HttpSecurity http) throws Exception {
+        http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .anyRequest().authenticated()
+                .anyMatchers("/").permitAll() // Разрешаем доступ всем на главную страницу
+                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
                 .and()
-                .formLogin().permitAll()
+                .formLogin()
+                .loginPage("/login") // Указываем URL страницы логина
+                .permitAll() // Разрешаем доступ всем к странице логина
                 .and()
-                .logout().permitAll();*/
-    }
+                .logout()
+                .logoutSuccessUrl("/login?logout") // URL при успешном выходе
+                .permitAll(); // Разрешаем доступ всем к URL выхода
+    }*/
 }
