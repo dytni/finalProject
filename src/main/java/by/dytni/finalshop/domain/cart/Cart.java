@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity(name = "cart")
-@Table(name = "carts_3")
+@Table(name = "carts")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
