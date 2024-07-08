@@ -36,7 +36,7 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/products", "/products", "/user/create").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/products", "/products", "/user/create", "/user/show").permitAll()
                         .requestMatchers("/products/**").authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer :: permitAll).build();
     }
