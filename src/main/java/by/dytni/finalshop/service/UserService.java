@@ -1,7 +1,9 @@
 package by.dytni.finalshop.service;
 
 import by.dytni.finalshop.config.UserDetailsImpl;
+import by.dytni.finalshop.domain.cart.Cart;
 import by.dytni.finalshop.domain.users.User;
+import by.dytni.finalshop.repository.CartRepository;
 import by.dytni.finalshop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,8 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,8 +36,16 @@ public class UserService implements UserDetailsService {
     public void saveUser(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
+
+        Cart cart = new Cart();
+        cart.setUser(user); // Связываем корзину с пользователем
+        cart.setProducts(new ArrayList<>()); // Инициализируем список продуктов
+        user.setCart(cart); // Связываем пользователя с корзиной
+
+        cartRepository.save(cart);
         userRepository.save(user);
     }
+
 
     public Integer getCurrentUserId()  {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

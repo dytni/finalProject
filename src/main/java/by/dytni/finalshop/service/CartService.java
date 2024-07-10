@@ -50,13 +50,13 @@ public class CartService {
         Product product = optionalProduct.get();
 
         Cart cart = user.getCart();
-        if (cart == null) {
+       /* if (cart == null) {
             cart = new Cart();
             cart.setUser(user); // Связываем корзину с пользователем
             cart.setProducts(new ArrayList<>()); // Инициализируем список продуктов
             user.setCart(cart); // Связываем пользователя с корзиной
             cartRepository.save(cart); // Сохраняем новую корзину
-        }
+        }*/
 
         cart.getProducts().add(product); // Добавляем продукт в корзину
         cartRepository.saveAndFlush(cart); // Сохраняем обновленную корзину

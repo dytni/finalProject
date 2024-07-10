@@ -28,12 +28,13 @@ public class UserController {
         model.addAttribute("users", user);
         return "user";
     }
+
     @PostMapping("/user/create/u")
     public String signUpUser(
-                             @RequestParam("username") String username,
-                             @RequestParam("password") String password,
-                             @RequestParam("confirmPassword") String confirmPassword,
-                             RedirectAttributes redirectAttributes) {
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("confirmPassword") String confirmPassword,
+            RedirectAttributes redirectAttributes) {
 
         if (!password.equals(confirmPassword)) {
             redirectAttributes.addFlashAttribute("error", "Passwords do not match!");
@@ -58,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("user/signup")
-    public String signUp(){
+    public String signUp() {
         return "signup";
     }
 
@@ -70,11 +71,11 @@ public class UserController {
             return "redirect:/login";
         } else {
             User user = userService.getUser(id);
-            model.addAttribute("user", user );
-            if(user.getRole().equals("ROLE_ADMIN") || user.getRole().equals("ROLE_ADMIN, ROLE_USER")){
-            return "admin";
-            }
-            else return "user";
+            model.addAttribute("user", user);
+            if (user.getRole().equals("ROLE_ADMIN") || user.getRole().equals("ROLE_ADMIN, ROLE_USER")) {
+                return "admin";
+            } else
+                return "user";
         }
 
     }
