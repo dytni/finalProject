@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Product List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
@@ -10,7 +10,7 @@
             background-color: #f4f4f4;
             padding: 20px;
         }
-        h1, h3 {
+        h1 {
             margin-bottom: 20px;
         }
         form {
@@ -44,25 +44,6 @@
         button:hover {
             background-color: #0056b3;
         }
-        input[type="submit"], input[type="text"], select, input[type="number"] {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            width: calc(100% - 16px);
-        }
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
         .btn-group-header {
             position: absolute;
             top: 20px;
@@ -93,14 +74,14 @@
             <input type="text" name="name" id="name" class="form-control mx-sm-3">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
-        <a href="/products" class="btn btn-primary ml-2">Back</a> <!-- Заменил вторую кнопку submit на ссылку -->
+        <a href="/products" class="btn btn-primary ml-2">Back</a>
     </form>
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Name</th>
             <th>Size</th>
-            <th>Type</th> <!-- Добавлен столбец для отображения типа продукта -->
+            <th>Type</th>
             <th>Price</th>
             <th>Actions</th>
         </tr>
@@ -109,49 +90,21 @@
         <tr th:each="product : ${products}">
             <td th:text="${product.name}"></td>
             <td th:text="${product.size}"></td>
-            <td th:text="${product.type}"></td> <!-- Выводим тип продукта -->
+            <td th:text="${product.type}"></td>
             <td th:text="${product.coast}"></td>
             <td>
-                <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
-                    <button type="submit" class="btn btn-success">Add to Cart</button>
-                </form>
+                <div class="btn-group">
+                    <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                    <form th:action="@{/products/info/{id}(id=${product.id})}" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-info">Details</button>
+                    </form>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
-    <h3 class="mt-5 mb-3">Create Product</h3>
-    <form action="/products/create" method="post">
-        <div class="form-group">
-            <label for="productName">Name:</label>
-            <input type="text" name="name" id="productName" class="form-control">
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="productSize">Size:</label>
-                <select name="size" id="productSize" class="form-control">
-                    <option value="xs">XS</option>
-                    <option value="s">S</option>
-                    <option value="m">M</option>
-                    <option value="l">L</option>
-                    <option value="xl">XL</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="productType">Type:</label>
-                <select name="type" id="productType" class="form-control">
-                    <option value="PANTS">Pants</option>
-                    <option value="SHORTS">Shorts</option>
-                    <option value="SNEAKERS">Sneakers</option>
-                    <option value="LONGSLEEVE">Longsleeve</option>
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="productCoast">Coast:</label>
-                <input type="number" name="coast" id="productCoast" class="form-control">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success">Add Product</button>
-    </form>
 </div>
 </body>
 </html>

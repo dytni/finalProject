@@ -2,127 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Products</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1, h3 {
-            color: #333;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        td:last-child {
-            text-align: center;
-        }
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        input[type="submit"], input[type="text"], select, input[type="number"] {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            width: calc(100% - 16px);
-        }
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Product Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body>
-<div class="container">
-    <h1>Product List</h1>
-    <form action="/" method="get">
-        Search by name: <input type="text" name="name"> <br> <input type="submit" value="Search"/>
-    </form>
-    <table>
-        <thead>
+<body class="bg-light">
+<div class="container mt-4">
+    <h1 class="mb-4">Product Details</h1>
+    <table class="table table-bordered table-hover">
+        <tbody>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product : ${products}">
             <td th:text="${product.id}"></td>
+        </tr>
+        <tr>
+            <th>Name</th>
             <td th:text="${product.name}"></td>
+        </tr>
+        <tr>
+            <th>Size</th>
             <td th:text="${product.size}"></td>
+        </tr>
+        <tr>
+            <th>Price</th>
             <td th:text="${product.coast}"></td>
-            <td>
-                <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post">
-                    <input type="hidden" name="_method" value="post" />
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
         </tr>
         </tbody>
     </table>
-    <h3>Create product</h3>
-    <form action="/products/create" method="post">
-        Name: <input type="text" name="name"/><br><br>
-        Size: <select th:value="text" name="size">
-        <option value="xs">XS</option>
-        <option value="s">S</option>
-        <option value="m">M</option>
-        <option value="l">L</option>
-        <option value="xl">XL</option>
-    </select><br><br>
-        Type: <select th:value="text" name="type">
-        <option value="PANTS">Pants</option>
-        <option value="SHORTS">Shorts</option>
-        <option value="SNEAKERS">Sneakers</option>
-        <option value="LONGSLEEVE">Longsleeve</option>
-    </select><br><br>
-        Coast: <input type="number" name="coast"/><br><br>
-        <input type="submit" value="Add product"/>
+    <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
+        <button type="submit" class="btn btn-success mr-2">Add to Cart</button>
+        <a href="/products" class="btn btn-primary">Back to Products</a>
     </form>
 </div>
 </body>

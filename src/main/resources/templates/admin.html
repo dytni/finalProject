@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Admin Dashboard</h1>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Admin Information</h5>
+            <p class="card-text"><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+            <p class="card-text"><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+            <p class="card-text"><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Actions</h5>
+            <a href="/user/show" class="btn btn-info mb-2">Show Users</a>
+            <a href="/products/add" class="btn btn-secondary mb-2">Add Product</a>
+        </div>
+    </div>
+
+    <a href="/products" class="btn btn-primary mt-3">Back to Products</a>
+    <a href="/logout" class="btn btn-danger mt-3 float-right">Logout</a>
+</div>
+
+</body>
+</html>

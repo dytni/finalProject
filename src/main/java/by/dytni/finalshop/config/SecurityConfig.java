@@ -37,7 +37,7 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/products", "/user/create", "/login/**", "/user/show", "/user/create").permitAll()
+                        .requestMatchers("/", "/products", "/products/info/**", "/login/**", "/user/create/u", "user/signup").permitAll()
                         .requestMatchers("/products/**").authenticated()
                         .anyRequest().authenticated())
                 .formLogin(login -> login

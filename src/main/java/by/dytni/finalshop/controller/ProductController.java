@@ -29,20 +29,25 @@
             return "products";
         }*/
 
+        @GetMapping("/products/add")
+        public String addProduct(Model model) {
+            model.addAttribute("products", productService.getProducts(null));
+            return "addproduct";
+        }
         @PostMapping("/products/create")
         @PreAuthorize("hasAuthority('ROLE_ADMIN')")
         public String saveProduct(@ModelAttribute Product product) {
             productService.saveProduct(product);
-            return "redirect:/products";
+            return "redirect:/products/add";
         }
 
         @PreAuthorize("hasAuthority('ROLE_ADMIN')")
         @PostMapping("/products/delete/{id}")
         public String deleteProduct(@PathVariable Integer id) {
             productService.deleteProductById(id);
-            return "redirect:/products";
+            return "redirect:/products/add";
         }
-        @GetMapping("/products/{id}")
+        @GetMapping("/products/info/{id}")
         public String viewProduct(@PathVariable Integer id, Model model) {
             Product product = productService.getProductById(id);
             model.addAttribute("product", product);
