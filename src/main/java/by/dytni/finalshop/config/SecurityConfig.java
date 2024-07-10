@@ -36,11 +36,13 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/", "/products", "/user/create", "/user/show").permitAll()
-                        .requestMatchers("/products/**").authenticated())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/products", "/user/create", "/login/**", "/user/show", "/user/create").permitAll()
+                        .requestMatchers("/products/**").authenticated()
+                        .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
+                        .defaultSuccessUrl("/products", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")

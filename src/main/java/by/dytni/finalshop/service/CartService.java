@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -51,15 +52,18 @@ public class CartService {
         Cart cart = user.getCart();
         if (cart == null) {
             cart = new Cart();
-            cart.setUser(user);
-            user.setCart(cart);
+            cart.setUser(user); // Связываем корзину с пользователем
+            cart.setProducts(new ArrayList<>()); // Инициализируем список продуктов
+            user.setCart(cart); // Связываем пользователя с корзиной
+            cartRepository.save(cart); // Сохраняем новую корзину
         }
 
-        cart.getProducts().add(product);
-
-        cartRepository.save(cart);
-        userRepository.save(user);
+        cart.getProducts().add(product); // Добавляем продукт в корзину
+        cartRepository.saveAndFlush(cart); // Сохраняем обновленную корзину
     }
+
+
+
 
     @Transactional
     public void removeProductFromCart(Integer productId) throws Exception {

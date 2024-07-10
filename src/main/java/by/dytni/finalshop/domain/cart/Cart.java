@@ -22,6 +22,8 @@ public class Cart {
     private Integer id;
 
     @OneToOne(mappedBy = "cart")
+    @MapsId
+    @JoinColumn(name = "id")
     private User user;
 
     @ManyToMany
@@ -31,4 +33,14 @@ public class Cart {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> products;
+
+    public Float calculateTotalCost() {
+        Float totalCost = 0.0F;
+        if (products != null) {
+            for (Product product : products) {
+                totalCost += product.getCoast();
+            }
+        }
+        return totalCost;
+    }
 }

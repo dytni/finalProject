@@ -63,10 +63,29 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        .btn-group-header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .btn-group-header button {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
+    <div class="btn-group-header">
+        <form action="/user/info" method="get" style="display:inline;">
+            <button type="submit" class="btn btn-info">Profile</button>
+        </form>
+        <form action="/login" method="get" style="display:inline;">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <form action="/logout" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-warning">Logout</button>
+        </form>
+    </div>
     <h1 class="mb-4">Product List</h1>
     <form action="/products" method="get" class="form-inline">
         <div class="form-group mr-3">
@@ -74,30 +93,27 @@
             <input type="text" name="name" id="name" class="form-control mx-sm-3">
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
-
-        <button type="submit" class="btn btn-primary ml-2">Back</button>
-
+        <a href="/products" class="btn btn-primary ml-2">Back</a> <!-- Заменил вторую кнопку submit на ссылку -->
     </form>
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Size</th>
+            <th>Type</th> <!-- Добавлен столбец для отображения типа продукта -->
             <th>Price</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="product : ${products}">
-            <td th:text="${product.id}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.size}"></td>
+            <td th:text="${product.type}"></td> <!-- Выводим тип продукта -->
             <td th:text="${product.coast}"></td>
             <td>
-                <form th:action="@{/products/delete/{id}(id=${product.id})}" method="post">
-                    <input type="hidden" name="_method" value="post" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
+                    <button type="submit" class="btn btn-success">Add to Cart</button>
                 </form>
             </td>
         </tr>

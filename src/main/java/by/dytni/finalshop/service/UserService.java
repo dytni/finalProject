@@ -30,12 +30,11 @@ public class UserService implements UserDetailsService {
 
     public void saveUser(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String password = encoder.encode(user.getPassword());
-        user.setPassword(password);
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-    public Integer getCurrentUserId() throws Exception {
+    public Integer getCurrentUserId()  {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
 
@@ -46,13 +45,13 @@ public class UserService implements UserDetailsService {
         }
 
         Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new Exception("User not found");
-        }
+        return user.map(User::getId).orElse(null);
 
-        return user.get().getId();
     }
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+    public User getUser(Integer id){
+        return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 }

@@ -16,7 +16,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<Product> getProducts(String name) {
-        if (name == null) {
+        if (name == null || name.isEmpty()) {
             return productRepository.findAll();
         } else {
             return productRepository.findByName(name);

@@ -8,16 +8,46 @@
 <body>
 <div class="container mt-5">
     <h1>User Details</h1>
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">User Information</h5>
             <p class="card-text"><strong>ID:</strong> <span th:text="${user.id}"></span></p>
             <p class="card-text"><strong>Username:</strong> <span th:text="${user.username}"></span></p>
             <p class="card-text"><strong>Password:</strong> <span th:text="${user.password}"></span></p>
             <p class="card-text"><strong>Role:</strong> <span th:text="${user.role}"></span></p>
-            <a href="/user/show" class="btn btn-primary">Back to Users List</a>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Products in Cart</h5>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="product : ${user.cart.products}">
+                    <span th:text="${product.name}"></span>
+                    <span th:text="${product.size}"></span>
+                    <span th:text="${product.type}"></span>
+                    <span th:text="${product.coast}"></span>
+                    <form th:action="@{/cart/delete/{id}(id=${product.id})}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm float-right">Remove</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Total Cost</h5>
+            <p class="card-text"><strong>Total:</strong> <span th:text="${user.cart.calculateTotalCost()}"></span></p>
+            <form action="/cart/buy" method="post">
+                <button type="submit" class="btn btn-success">Buy</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="/products" class="btn btn-primary mt-3">Back to Products</a>
+    <a href="/logout" class="btn btn-danger mt-3 float-right">Logout</a>
 </div>
+
 </body>
 </html>
