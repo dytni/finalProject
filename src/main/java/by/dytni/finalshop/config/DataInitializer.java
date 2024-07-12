@@ -17,7 +17,7 @@ public class DataInitializer {
             String password = "admin";
             String role = "ROLE_ADMIN";
 
-            if (userRepository.findByUsername(username) == null) {
+            if (userRepository.findByUsername(username).isEmpty()) {
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 User user = new User();
                 user.setUsername(username);
