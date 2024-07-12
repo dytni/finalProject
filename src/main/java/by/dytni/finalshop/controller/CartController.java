@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class CartController {
     private final CartService service;
+
     @PostMapping("/cart/add/{id}")
     public String addToCart(@PathVariable Integer id) throws Exception {
         service.addProductToCart(id);
         return "redirect:/products";
     }
+
     @PostMapping("/cart/delete/{id}")
     public String deleteFromCart(@PathVariable Integer id) throws Exception {
         service.removeProductFromCart(id);

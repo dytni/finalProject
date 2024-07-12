@@ -1,0 +1,341 @@
+openapi: 3.0.0
+info:
+  title: Магазин одежды OpenAPI спецификация
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080/
+    description: Development Server
+paths:
+  /products:
+    get:
+      summary: Метод получения списка товаров
+      tags:
+        - Products
+      operationId: products
+      parameters:
+        - name: name
+          in: query
+          description: Необязательный параметр для фильтрации товаров по имени
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ со списком товаров
+          content:
+            products.html:
+              schema:
+                type: string
+                example: "<html><body>...</body></html>"
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            error.html:
+              schema:
+                type: string
+                example:  "<html><body>Internal server error</body></html>"
+        '404':
+          description: Товары не найдены
+          content:
+            error.html:
+              schema:
+                type: string
+                example: "<html><body>Products not found</body></html>"
+        'default':
+          description: Ошибки внутри сервера
+          content:
+            error.html:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /products/add:
+    get:
+      summary: Метод для добавления нового товара
+      tags:
+        - Products
+      operationId: addProduct
+      responses:
+        '200':
+          description: Форма для добавления товара
+          content:
+            productsadd/html:
+              schema:
+                type: string
+                example: "<html><body>...</body></html>"
+        'default':
+          description: Ошибки внутри сервера
+          content:
+            error.html:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /products/create:
+    post:
+      summary: Метод для создания нового товара
+      tags:
+        - Products
+      operationId: createProduct
+      requestBody:
+        description: Новый товар
+        required: true
+        content:
+          products/create:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '302':
+          description: Перенаправление на страницу добавления товара
+          headers:
+            Location:
+              description: URL для перенаправления /products/add
+              schema:
+                type: string
+                example: "/products/add"
+  /products/info/{id}:
+    get:
+      summary: Метод для просмотра информации о товаре
+      tags:
+        - Products
+      operationId: viewProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Информация о товаре
+          content:
+            productInfo.html:
+              schema:
+                type: string
+                example: "<html><body>...</body></html>"
+        '404':
+          description: Товар не найден
+          content:
+            error.html:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Product not found"
+  /cart/add/{id}:
+    post:
+      summary: Добавление товара в корзину и сохранение информации о корзине в базе данных
+      tags:
+        - Cart
+      operationId: addToCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор товара
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '302':
+          description: Перенаправление на страницу списка товаров
+          headers:
+            Location:
+              description: URL для перенаправления
+              schema:
+                type: string
+                example: "/products"
+  /cart/delete/{id}:
+    post:
+      summary: Удаление товара из корзины и сохранение информации о корзине в базе данных
+      tags:
+        - Cart
+      operationId: deleteFromCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Идентификатор товара
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '302':
+          description: Перенаправление на страницу информации о пользователе
+          headers:
+            Location:
+              description: URL для перенаправления
+              schema:
+                type: string
+                example: "/user/info"
+  /user/create:
+    post:
+      summary: Создание пользователя
+      tags:
+        - Users
+      operationId: createUser
+      requestBody:
+        description: Новый пользователь
+        required: true
+        content:
+          user/create:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Успешное создание пользователя
+          content:
+            user.html:
+              schema:
+                type: string
+  /user/create/u:
+    post:
+      summary: Регистрация нового пользователя
+      tags:
+        - Users
+      operationId: signUpUser
+      requestBody:
+        description: Данные нового пользователя
+        required: true
+        content:
+          user/create/u:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                confirmPassword:
+                  type: string
+      responses:
+        '302':
+          description: Перенаправление на страницу входа или ошибки
+          headers:
+            Location:
+              description: URL для перенаправления
+              schema:
+                type: string
+                example: "/login" # или "/user/signup" при ошибке
+  /user/show:
+    get:
+      summary: Показать всех пользователей
+      tags:
+        - Users
+      operationId: showUsers
+      responses:
+        '200':
+          description: Успешный ответ с информацией о пользователях
+          content:
+            users.html:
+              schema:
+                type: string
+  /user/signup:
+    get:
+      summary: Страница регистрации
+      tags:
+        - Users
+      operationId: signUp
+      responses:
+        '200':
+          description: Страница регистрации
+          content:
+            signup.html:
+              schema:
+                type: string
+  /user/info:
+    get:
+      summary: Информация о текущем пользователе
+      tags:
+        - Users
+      operationId: userInfo
+      responses:
+        '200':
+          description: Страница с информацией о пользователе выдается в зависимости от роли
+          content:
+            admin.html:
+              schema:
+                type: string
+            user.html:
+              schema:
+                type: string
+        '401':
+          description: Перенаправление на логин
+          content:
+            login.html:
+              schema:
+                type: string
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - name
+        - type
+        - coast
+        - size
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 5
+        name:
+          type: string
+          example: dvd
+        type:
+          type: string
+          enum:
+            - PANTS
+            - SHORTS
+            - SNEAKERS
+            - LONGSLEEVE
+          example: PANTS
+        coast:
+          type: number
+          format: float
+          example: 150.0
+        size:
+          type: string
+          enum:
+            - xs
+            - s
+            - m
+            - l
+            - xl
+          example: s
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Совпадает с id User
+          example: 5
+        user:
+          $ref: '#/components/schemas/User'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    User:
+      type: object
+      required:
+        - username
+        - password
+        - role
+        - cart
+      properties:
+        id:
+          type: integer
+          format: int32
+        username:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+        cart:
+          $ref: '#/components/schemas/Cart'
+    Error:
+      type: string
+      example: "<html><body>Error message</body></html>"
+
