@@ -1,6 +1,6 @@
 package by.dytni.finalshop.config;
 
-import by.dytni.finalshop.domain.users.User;
+import by.dytni.finalshop.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

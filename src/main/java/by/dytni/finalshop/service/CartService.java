@@ -1,9 +1,9 @@
 package by.dytni.finalshop.service;
 
 
-import by.dytni.finalshop.domain.cart.Cart;
-import by.dytni.finalshop.domain.product.Product;
-import by.dytni.finalshop.domain.users.User;
+import by.dytni.finalshop.domain.Cart;
+import by.dytni.finalshop.domain.Product;
+import by.dytni.finalshop.domain.User;
 import by.dytni.finalshop.repository.CartRepository;
 import by.dytni.finalshop.repository.ProductRepository;
 import by.dytni.finalshop.repository.UserRepository;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 

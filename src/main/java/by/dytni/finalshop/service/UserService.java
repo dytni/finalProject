@@ -1,8 +1,8 @@
 package by.dytni.finalshop.service;
 
 import by.dytni.finalshop.config.UserDetailsImpl;
-import by.dytni.finalshop.domain.cart.Cart;
-import by.dytni.finalshop.domain.users.User;
+import by.dytni.finalshop.domain.Cart;
+import by.dytni.finalshop.domain.User;
 import by.dytni.finalshop.repository.CartRepository;
 import by.dytni.finalshop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;

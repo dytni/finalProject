@@ -1,6 +1,5 @@
-package by.dytni.finalshop.domain.users;
+package by.dytni.finalshop.domain;
 
-import by.dytni.finalshop.domain.cart.Cart;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

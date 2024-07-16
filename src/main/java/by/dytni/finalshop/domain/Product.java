@@ -1,4 +1,4 @@
-package by.dytni.finalshop.domain.product;
+package by.dytni.finalshop.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,5 +22,6 @@ public class Product {
     Float coast;
     @Column(name = "size")
     String size;
+
 
 }

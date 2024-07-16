@@ -1,7 +1,7 @@
     package by.dytni.finalshop.controller;
 
 
-    import by.dytni.finalshop.domain.product.Product;
+    import by.dytni.finalshop.domain.Product;
     import by.dytni.finalshop.service.ProductService;
     import lombok.RequiredArgsConstructor;
     import org.springframework.security.access.prepost.PreAuthorize;

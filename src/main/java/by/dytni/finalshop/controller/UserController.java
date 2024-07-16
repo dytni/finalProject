@@ -1,7 +1,7 @@
 package by.dytni.finalshop.controller;
 
 
-import by.dytni.finalshop.domain.users.User;
+import by.dytni.finalshop.domain.User;
 import by.dytni.finalshop.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;

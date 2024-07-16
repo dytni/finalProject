@@ -1,6 +1,6 @@
 package by.dytni.finalshop.config;
 
-import by.dytni.finalshop.domain.users.User;
+import by.dytni.finalshop.domain.User;
 import by.dytni.finalshop.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

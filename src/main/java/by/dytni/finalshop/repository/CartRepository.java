@@ -1,6 +1,6 @@
 package by.dytni.finalshop.repository;
 
-import by.dytni.finalshop.domain.cart.Cart;
+import by.dytni.finalshop.domain.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

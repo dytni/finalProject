@@ -1,6 +1,6 @@
 package by.dytni.finalshop.service;
 
-import by.dytni.finalshop.domain.product.Product;
+import by.dytni.finalshop.domain.Product;
 import by.dytni.finalshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

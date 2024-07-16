@@ -1,7 +1,7 @@
 package by.dytni.finalshop.repository;
 
 
-import by.dytni.finalshop.domain.product.Product;
+import by.dytni.finalshop.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
