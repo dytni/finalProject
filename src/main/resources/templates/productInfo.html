@@ -26,6 +26,10 @@
             <th>Price</th>
             <td th:text="${product.coast}"></td>
         </tr>
+        <!--<tr>
+            <th>Image</th>
+            <td th:img th:src="@{/images/{id}(id=${image1.getId()})}"></td>
+        </tr>-->
         </tbody>
     </table>
     <form th:action="@{/cart/add/{id}(id=${product.id})}" method="post">
