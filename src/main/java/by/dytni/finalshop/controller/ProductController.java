@@ -1,6 +1,7 @@
     package by.dytni.finalshop.controller;
 
 
+    import by.dytni.finalshop.domain.Image;
     import by.dytni.finalshop.domain.Product;
     import by.dytni.finalshop.service.ProductService;
     import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
+
+    import java.util.List;
 
     @Controller
     @RequiredArgsConstructor
@@ -51,6 +54,10 @@
         public String viewProduct(@PathVariable Integer id, Model model) {
             Product product = productService.getProductById(id);
             model.addAttribute("product", product);
+            List<Image> imageList = product.getImageList();
+            model.addAttribute("image1", imageList.get(0));
+            model.addAttribute("image2", imageList.get(1));
+            model.addAttribute("image3", imageList.get(2));
             return "productInfo";
         }
     }

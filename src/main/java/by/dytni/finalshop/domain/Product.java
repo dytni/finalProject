@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity(name = "product")
 @Table(name = "products")
 @Data
@@ -22,6 +24,9 @@ public class Product {
     Float coast;
     @Column(name = "size")
     String size;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Image> imageList;
+
 
 
 }
