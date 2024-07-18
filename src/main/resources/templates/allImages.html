@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Images</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>All Images</h1>
+    <div class="row">
+        <div class="col-md-4" th:each="image : ${imageList}">
+            <div class="card mb-4 shadow-sm">
+                <img th:src="@{/images/{id}(id=${image.id})}" class="card-img-top" alt="Image"/>
+                <div class="card-body">
+                    <p class="card-text" th:text="${image.name}"></p>
+                    <p class="card-text"><strong>Size:</strong> <span th:text="${image.size}"></span></p>
+                    <p class="card-text"><strong>Content Type:</strong> <span th:text="${image.contentType}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Blob;
+
 @Entity(name = "image")
 @Table(name = "image")
 @Data
@@ -27,7 +29,7 @@ public class Image {
     @Column(name = "is_preview_image")
     private boolean isPreviewImage;
     @Lob
-    private byte[] bytes;
+    private Blob blob;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @ToString.Exclude

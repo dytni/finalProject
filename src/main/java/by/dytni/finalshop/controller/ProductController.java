@@ -11,8 +11,10 @@
     import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.*;
     import org.springframework.web.multipart.MultipartFile;
+    import org.springframework.web.servlet.ModelAndView;
 
     import java.io.IOException;
+    import java.sql.SQLException;
     import java.util.List;
 
     @Controller
@@ -38,7 +40,7 @@
         public String saveProduct(@ModelAttribute Product product,
                                   @RequestParam("file1")MultipartFile file1,
                                   @RequestParam("file2")MultipartFile file2,
-                                  @RequestParam("file3")MultipartFile file3 )throws IOException {
+                                  @RequestParam("file3")MultipartFile file3 ) throws IOException, SQLException {
             productService.saveProduct(product, file1, file2, file3);
             return "redirect:/products/add";
         }
@@ -54,9 +56,9 @@
             Product product = productService.getProductById(id);
             model.addAttribute("product", product);
             List<Image> imageList = product.getImageList();
-            model.addAttribute("image1", imageList.get(1));
-            model.addAttribute("image2", imageList.get(2));
-            model.addAttribute("image3", imageList.get(3));
+            model.addAttribute("image1id", imageList.get(0).getId());
+            model.addAttribute("image2id", imageList.get(1).getId());
+            model.addAttribute("image3id", imageList.get(2).getId());
             return "productInfo";
         }
     }

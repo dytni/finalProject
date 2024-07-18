@@ -6,14 +6,14 @@ import by.dytni.finalshop.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,22 +38,22 @@ public class ProductService {
     }
 
     @Transactional
-    public void saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+    public void saveProduct(Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException, SQLException {
         Image image1;
         Image image2;
         Image image3;
 
         if (file1.getSize() != 0) {
-            image1 = toCompressedImageEntity(file1);
+            image1 = toImageEntity(file1);
             image1.setPreviewImage(true);
             product.addImage(image1);
         }
         if (file2.getSize() != 0) {
-            image2 = toCompressedImageEntity(file2);
+            image2 = toImageEntity(file2);
             product.addImage(image2);
         }
         if (file3.getSize() != 0) {
-            image3 = toCompressedImageEntity(file3);
+            image3 = toImageEntity(file3);
             product.addImage(image3);
         }
 
@@ -63,31 +63,15 @@ public class ProductService {
         productRepository.save(productDB);
     }
 
-    private Image toCompressedImageEntity(MultipartFile file) throws IOException {
+    private Image toImageEntity(MultipartFile file) throws SQLException, IOException {
         Image image = new Image();
         image.setName(file.getName());
         image.setOriginalFileName(file.getOriginalFilename());
         image.setContentType(file.getContentType());
         image.setSize(file.getSize());
-
-        // Сжатие изображения
-        byte[] compressedBytes = compressImage(file.getBytes());
-        image.setBytes(compressedBytes);
-
+        Blob blob = new javax.sql.rowset.serial.SerialBlob(file.getBytes());
+        image.setBlob(blob);
         return image;
-    }
-
-    private byte[] compressImage(byte[] originalBytes) throws IOException {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(originalBytes);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        // Сжатие изображения до 800x600 пикселей, можно изменить размеры по необходимости
-        Thumbnails.of(inputStream)
-                .size(800, 600)
-                .outputFormat("jpg")
-                .toOutputStream(outputStream);
-
-        return outputStream.toByteArray();
     }
 
     public void deleteProductById(Integer id) {
