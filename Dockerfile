@@ -7,8 +7,9 @@ ENV SPRING_DATASOURCE_URL=jdbc:postgresql://172.31.48.1:5432/products
 ENV SPRING_DATASOURCE_USERNAME=dytni
 ENV SPRING_DATASOURCE_PASSWORD=1331
 
-EXPOSE 8081
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
-# docker run -p 8081:8081 finalshopapi docker build -t finalshopapi .
+# docker run -p 8080:8080 finalshopapi
+# docker build -t finalshopapi .
