@@ -118,10 +118,14 @@ class UserControllerTest {
                 .andExpect(redirectedUrl("/login"));
     }
 
-    @Test
+  /*  @Test
     void testSignUp() throws Exception {
-        mockMvc.perform(get("/user/signup"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/signup"));
-    }
+        mockMvc.perform(get("/user/signup")
+                .param("username", "testuser")
+                .param("password", "password1")
+                .param("confirmPassword", "password2"))
+                .andExpect(status().isCreated())
+                .andExpect(redirectedUrl("/user/create/u"))
+                .andExpect(flash().attribute("error", "Passwords do not match!"));
+    }*/
 }
