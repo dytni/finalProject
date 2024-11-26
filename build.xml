@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="finalShop" default="build" basedir=".">
+
+    <!-- Свойства -->
+    <property name="src.dir" value="src/main/java"/>
+    <property name="resources.dir" value="src/main/resources"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="libs"/>
+    <property name="jar.name" value="finalShop-0.0.2-SNAPSHOT.jar"/>
+    <property name="main.class" value="by.dytni.finalshop.FinalShopApplication"/>
+
+    <!-- Очистка -->
+    <target name="clean">
+        <echo message="Очистка директории сборки..."/>
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Компиляция -->
+    <target name="compile" depends="clean">
+        <echo message="Компиляция исходного кода..."/>
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+            <classpath>
+                <!-- Подключение всех библиотек из папки libs -->
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <!-- Копирование ресурсов -->
+        <copy todir="${classes.dir}">
+            <fileset dir="${resources.dir}" />
+        </copy>
+    </target>
+
+    <!-- Создание JAR -->
+    <target name="jar" depends="compile">
+        <echo message="Создание JAR-файла..."/>
+        <mkdir dir="${build.dir}/lib"/>
+        <jar destfile="${build.dir}/lib/${jar.name}" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Запуск приложения -->
+    <target name="run" depends="jar">
+        <echo message="Запуск приложения..."/>
+        <java jar="${build.dir}/lib/${jar.name}" fork="true"/>
+    </target>
+
+    <!-- Сборка по умолчанию -->
+    <target name="build" depends="jar">
+        <echo message="Сборка завершена. JAR-файл: ${build.dir}/lib/${jar.name}"/>
+    </target>
+</project>
