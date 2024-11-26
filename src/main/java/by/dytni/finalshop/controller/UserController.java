@@ -60,7 +60,7 @@ public class UserController {
 
     @GetMapping("user/signup")
     public String signUp() {
-        return "signup";
+        return "redirect:/signup";
     }
 
 
