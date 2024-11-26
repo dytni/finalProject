@@ -1,9 +1,7 @@
 package by.dytni.finalshop.domain.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity(name = "product")
 @Table(name = "products")
@@ -18,6 +16,8 @@ public class Product {
     String name;
     @Column(name = "type")
     String type;
+    @Setter
+    @Getter
     @Column(name = "coast")
     Float coast;
     @Column(name = "size")
