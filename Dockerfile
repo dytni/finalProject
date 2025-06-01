@@ -1,11 +1,7 @@
-FROM openjdk:21
+FROM eclipse-temurin:21-jdk
 
 ARG JAR_FILE=target/*.jar
-COPY ./target/finalShop-0.0.2-SNAPSHOT.jar app.jar
-
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://0.0.0.0:5432/products
-ENV SPRING_DATASOURCE_USERNAME=dytni
-ENV SPRING_DATASOURCE_PASSWORD=1331
+COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
 

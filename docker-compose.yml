@@ -1,24 +1,31 @@
 version: "3.9"
+
 services:
   api:
-    image: finalshop-api:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/products
       SPRING_DATASOURCE_USERNAME: dytni
       SPRING_DATASOURCE_PASSWORD: 1331
-  postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: "products"
-      POSTGRES_USER: "dytni"
-      POSTGRES_PASSWORD: "1331"
-    ports:
-      - "5432:5432"
 
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: products
+      POSTGRES_USER: dytni
+      POSTGRES_PASSWORD: 1331
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dytni -d products"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
